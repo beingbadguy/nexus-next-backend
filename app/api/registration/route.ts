@@ -17,16 +17,12 @@ export async function POST(req: NextRequest) {
   try {
     const data = await req.json();
 
-    const {
-      fullName,
-      email,
-      phoneNumber,
-      semester,
-      gender,
-      branch,
-      registrationNumber,
-    } = data;
+    const { fullName, email, phoneNumber, semester, gender, branch } = data;
 
+    function generateRegistationNumber() {
+      return `GEC${Math.floor(Math.random() * 1000000)}`;
+    }
+    let registrationNumber = generateRegistationNumber();
     // Basic validation
     if (
       !fullName ||
