@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     function generateRegistationNumber() {
       return `GEC${Math.floor(Math.random() * 1000000)}`;
     }
-    let registrationNumber = generateRegistationNumber();
+    const registrationNumber = generateRegistationNumber();
     // Basic validation
     if (
       !fullName ||
