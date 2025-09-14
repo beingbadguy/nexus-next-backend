@@ -58,7 +58,15 @@ export async function POST(req: NextRequest) {
     }
 
     // TODO: Save to database here
-
+    const isAlreadyExist = await registrationModel.findOne({
+      email,
+    });
+    if (isAlreadyExist) {
+      return NextResponse.json(
+        { error: "Email already exists.", success: false },
+        { status: 400 }
+      );
+    }
     const registration = await registrationModel.create({
       fullName,
       email,
