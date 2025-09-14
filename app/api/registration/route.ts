@@ -85,3 +85,20 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+
+export async function GET() {
+  await dbConnection();
+  try {
+    const registrations = await registrationModel.find({});
+    return NextResponse.json({ registrations, success: true }, { status: 200 });
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json(
+      {
+        error: "Failed to fetch registrations.",
+        success: false,
+      },
+      { status: 500 }
+    );
+  }
+}
