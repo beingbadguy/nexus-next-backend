@@ -17,6 +17,7 @@ export async function GET() {
       {
         message: "Something went wrong",
         success: false,
+        data: [],
       },
       {
         status: 500,
