@@ -17,12 +17,20 @@ export async function POST(req: NextRequest) {
   try {
     const data = await req.json();
 
-    const { fullName, email, phoneNumber, semester, gender, branch } = data;
+    const {
+      fullName,
+      email,
+      phoneNumber,
+      semester,
+      gender,
+      branch,
+      registrationNumber,
+    } = data;
 
-    function generateRegistationNumber() {
-      return `GEC${Math.floor(Math.random() * 1000000)}`;
-    }
-    const registrationNumber = generateRegistationNumber();
+    // function generateRegistationNumber() {
+    //   return `GEC${Math.floor(Math.random() * 1000000)}`;
+    // }
+    // const registrationNumber = generateRegistationNumber();
     // Basic validation
     if (
       !fullName ||
@@ -55,11 +63,14 @@ export async function POST(req: NextRequest) {
 
     // TODO: Save to database here
     const isAlreadyExist = await registrationModel.findOne({
-      email,
+      $or: [{ email }, { registrationNumber }],
     });
     if (isAlreadyExist) {
       return NextResponse.json(
-        { error: "Email already exists.", success: false },
+        {
+          error: "Email Id or Registration Number already exists.",
+          success: false,
+        },
         { status: 400 }
       );
     }
